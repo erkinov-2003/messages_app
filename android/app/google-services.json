@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1045291876056",
+    "firebase_url": "https://message-app-80ac3-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "message-app-80ac3",
+    "storage_bucket": "message-app-80ac3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045291876056:android:a7e6f2e57e741aed08e1ad",
+        "android_client_info": {
+          "package_name": "dev.erkinov.messag_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFkwmKEq9Wae7L7j6OGATaStd6q0jcVXs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
