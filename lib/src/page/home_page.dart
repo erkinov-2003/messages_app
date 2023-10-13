@@ -21,31 +21,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final logOut = Provider.of<AuthService>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("WELCOME TO USER PAGE"),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {
-              logOut.logOut();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SignInPage(),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.login,
-              size: 30,
-            ),
-          ),
+
         ],
       ),
       body: _userBuildList(),
-      drawer: Drawer(
+      drawer: const Drawer(
         backgroundColor: Colors.black,
         child: Column(
           children: [],
@@ -64,10 +49,13 @@ class _HomePageState extends State<HomePage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text("Loading");
         }
-        return ListView(
-          children:
-              snapshot.data!.docs.map((e) => _buildUserListItem(e)).toList(),
-        );
+        if(snapshot.data != null){
+          return ListView(
+            children:
+            snapshot.data!.docs.map((e) => _buildUserListItem(e)).toList(),
+          );
+        }
+        return const CircularProgressIndicator();
       },
     );
   }

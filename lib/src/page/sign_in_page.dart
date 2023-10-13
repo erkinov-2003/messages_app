@@ -1,123 +1,126 @@
 import 'package:flutter/material.dart';
 import 'package:messag_app/src/page/home_page.dart';
 import 'package:messag_app/src/page/sign_up_page.dart';
-import 'package:messag_app/src/service/auth_service.dart';
-import 'package:messag_app/src/view/button_view.dart';
-import 'package:messag_app/src/view/text_fild_view.dart';
 import 'package:provider/provider.dart';
+import '../controller/provider.dart';
+import '../service/auth_service.dart';
+import '../view/button_view.dart';
+import '../view/text_fild_view.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _SignInPageState extends State<SignInPage> {
-  late final TextEditingController _emailController;
-  late final TextEditingController _passwordController;
+class _SignInState extends State<SignIn> {
+  final bool isLogin = true;
+  bool loading = false;
+  final _formKey1 = GlobalKey<FormState>();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
 
   @override
   void initState() {
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final signIn = Provider.of<AuthService>(context);
-
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 27, 32, 45),
       resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Container(
-            height: 170,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35),
-              ),
-            ),
-            child: const Center(
-              child: Text(
-                "SIGN IN REGISTRATION",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 29,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 70),
-          CustomTextField(
-            controller: _emailController,
-            hintText: "Enter email address",
-            obscureText: false,
-          ),
-          const SizedBox(height: 30),
-          CustomTextField(
-            controller: _passwordController,
-            hintText: "Enter password",
-            obscureText: false,
-          ),
-          const SizedBox(height: 50),
-          CustomElevatedButton(
-            text: "Sign In",
-            onPressed: () {
-              signIn.signIn(_emailController.text, _passwordController.text);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomePage(),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 50),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF9F28CC),
+        title: const Text("Sign In"),
+      ),
+      body: Form(
+        key: _formKey1,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
             children: [
               const Text(
-                "registation with",
+                "Welcome back! Glad\nto see you, Again!",
                 style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(width: 5),
-              TextButton(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SignUpPage(),
-                  ),
-                ),
-                child: const Text(
-                  "Sign up with",
-                  style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 17,
-                    color: Colors.blue,
-                  ),
-                ),
+                    color: Colors.white,
+                    fontSize: 35),
               ),
+              const SizedBox(height: 60),
+              CustomTextFild(
+                controller: emailController,
+                hintText: "your email",
+                validator: (p0) =>
+                    Provider.of<ProFunc>(context, listen: false).emailIn(p0),
+              ),
+              const SizedBox(height: 20),
+              CustomTextFild(
+                controller: passwordController,
+                hintText: "password",
+                validator: (p0) =>
+                    Provider.of<ProFunc>(context, listen: false).passwordIn(p0),
+              ),
+              const Spacer(),
+              CustomElevatedButton(
+                text: "Login",
+                onPressed: signInWithEmailAndPassword,
+              ),
+              const SizedBox(height: 40),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignUp(),
+                    ),
+                  );
+                },
+                child: RichText(
+                  text: const TextSpan(
+                      style: TextStyle(color: Colors.white),
+                      children: [
+                        TextSpan(
+                          text: "Don't have an account?",
+                        ),
+                        TextSpan(
+                          text: " SingUp now",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ]),
+                ),
+              )
             ],
           ),
-        ],
+        ),
       ),
     );
+  }
+
+  Future<void> signInWithEmailAndPassword() async {
+    await Auth()
+        .signInWithEmailAndPassword(
+          email: emailController.value.text,
+          password: passwordController.value.text,
+        )
+        .then(
+          (value) => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          ),
+        );
   }
 }

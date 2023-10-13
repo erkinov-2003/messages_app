@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:lottie/lottie.dart";
+import "package:messag_app/src/page/register_page.dart";
 import "package:messag_app/src/page/sign_in_page.dart";
 
 class SplashPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
       return Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const SignInPage(),
+          builder: (context) => const RegisterPage(),
         ),
       );
     });
