@@ -37,30 +37,9 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
-  void signUp() async {
-    if (_passwordController.text != _confrimPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Iltimos parolingizni bir xil kiriting!"),
-        ),
-      );
-      return;
-    }
-    AuthService _authService = Provider.of<AuthService>(context, listen: false);
-    try {
-      await _authService.signUp(
-          _emailController.text, _passwordController.text);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final signUp = Provider.of<AuthService>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -107,7 +86,18 @@ class _SignUpPageState extends State<SignUpPage> {
           const SizedBox(height: 50),
           CustomElevatedButton(
             text: "Sign Up",
-            onPressed: () => signUp(),
+            onPressed: () {
+              signUp.signUp(
+                _emailController.text,
+                _passwordController.text,
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+              );
+            },
           ),
           const SizedBox(height: 40),
           Row(

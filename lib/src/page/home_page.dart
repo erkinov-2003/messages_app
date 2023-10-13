@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:messag_app/src/page/sign_in_page.dart';
 import 'package:provider/provider.dart';
 
 import '../service/auth_service.dart';
@@ -16,20 +19,24 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final service = FirebaseAuth.instance;
 
-  void logOut() async {
-    final service = Provider.of<AuthService>(context, listen: false);
-    service.logOut();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final logOut = Provider.of<AuthService>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("WELCOME TO USER PAGE"),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: logOut,
+            onPressed: () {
+              logOut.logOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SignInPage(),
+                ),
+              );
+            },
             icon: const Icon(
               Icons.login,
               size: 30,
@@ -38,6 +45,12 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: _userBuildList(),
+      drawer: Drawer(
+        backgroundColor: Colors.black,
+        child: Column(
+          children: [],
+        ),
+      ),
     );
   }
 

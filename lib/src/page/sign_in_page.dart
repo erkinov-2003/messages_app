@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:messag_app/src/page/home_page.dart';
 import 'package:messag_app/src/page/sign_up_page.dart';
 import 'package:messag_app/src/service/auth_service.dart';
 import 'package:messag_app/src/view/button_view.dart';
@@ -30,26 +31,10 @@ class _SignInPageState extends State<SignInPage> {
     super.dispose();
   }
 
-  void signIn() async {
-    final authService = Provider.of<AuthService>(context, listen: false);
-    try {
-      await authService.signIn(
-        _emailController.text,
-        _passwordController.text,
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            e.toString(),
-          ),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final signIn = Provider.of<AuthService>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -90,7 +75,15 @@ class _SignInPageState extends State<SignInPage> {
           const SizedBox(height: 50),
           CustomElevatedButton(
             text: "Sign In",
-            onPressed: signIn,
+            onPressed: () {
+              signIn.signIn(_emailController.text, _passwordController.text);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+              );
+            },
           ),
           const SizedBox(height: 50),
           Row(
