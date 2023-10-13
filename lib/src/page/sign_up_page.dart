@@ -64,9 +64,28 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Container(
+            height: 170,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35),
+              ),
+            ),
+            child: const Center(
+              child: Text(
+                "SIGN UP REGISTRATION",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 29,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
           const SizedBox(height: 70),
           CustomTextField(
             controller: _emailController,
@@ -91,21 +110,35 @@ class _SignUpPageState extends State<SignUpPage> {
             onPressed: () => signUp(),
           ),
           const SizedBox(height: 40),
-          TextButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SignInPage(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "registation with",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
               ),
-            ),
-            child: const Text(
-              "Sign in with",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 19,
+              const SizedBox(width: 5),
+              TextButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SignInPage(),
+                  ),
+                ),
+                child: const Text(
+                  "Sign in with",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 17,
+                    color: Colors.blue,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

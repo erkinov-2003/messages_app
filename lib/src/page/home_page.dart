@@ -25,7 +25,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home Page"),
+        title: const Text("WELCOME TO USER PAGE"),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: logOut,
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         }
         return ListView(
           children:
-          snapshot.data!.docs.map((e) => _buildUserListItem(e)).toList(),
+              snapshot.data!.docs.map((e) => _buildUserListItem(e)).toList(),
         );
       },
     );
@@ -62,7 +63,21 @@ class _HomePageState extends State<HomePage> {
     Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
     if (service.currentUser!.email != data["email"]) {
       return ListTile(
-        title: Text(data["email"]),
+        title: Card(
+          child: SizedBox(
+            height: 50,
+            child: Center(
+              child: Text(
+                data["email"],
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 19,
+                ),
+              ),
+            ),
+          ),
+        ),
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
@@ -71,7 +86,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       );
-    }else{
+    } else {
       return Container();
     }
   }

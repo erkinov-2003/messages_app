@@ -53,10 +53,29 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 70),
+          Container(
+            height: 170,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35),
+              ),
+            ),
+            child: const Center(
+              child: Text(
+                "SIGN IN REGISTRATION",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 29,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 70),
           CustomTextField(
             controller: _emailController,
             hintText: "Enter email address",
@@ -74,21 +93,35 @@ class _SignInPageState extends State<SignInPage> {
             onPressed: signIn,
           ),
           const SizedBox(height: 50),
-          TextButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SignUpPage(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "registation with",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
               ),
-            ),
-            child: const Text(
-              "Sign up with",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 19,
-                color: Colors.black,
+              const SizedBox(width: 5),
+              TextButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SignUpPage(),
+                  ),
+                ),
+                child: const Text(
+                  "Sign up with",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 17,
+                    color: Colors.blue,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

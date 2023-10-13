@@ -77,11 +77,24 @@ class _ChatPageState extends State<ChatPage> {
         : Alignment.centerLeft;
     return Container(
       alignment: alignment,
-      child: Column(
-        children: [
-          Text(date["sendEmail"]),
-          Text(date["message"]),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.blue,
+              ),
+              child: Text(
+                date["message"],
+                style: const TextStyle(
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

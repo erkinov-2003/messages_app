@@ -21,9 +21,10 @@ class _AuthGateState extends State<AuthGate> {
         builder: (context, snapshot){
           if(snapshot.hasData){
             return const HomePage();
-          }else if(snapshot.hasData){
+          }
+          if(snapshot.hasData) {
             return const SignUpPage();
-          }else {
+          }else{
             return const SignInPage();
           }
         },

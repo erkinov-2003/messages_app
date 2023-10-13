@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:lottie/lottie.dart";
 import "package:messag_app/src/page/auth_gete.dart";
-import "package:messag_app/src/page/registration_page.dart";
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
