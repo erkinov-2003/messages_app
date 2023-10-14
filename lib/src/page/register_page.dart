@@ -1,65 +1,97 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:messag_app/src/page/sign_in_page.dart';
 import 'package:messag_app/src/page/sign_up_page.dart';
 
-import '../view/button_view.dart';
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
-
-  @override
-  State<RegisterPage> createState() => _RegisterState();
-}
-
-class _RegisterState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 27, 32, 45),
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Center(
+            child: Image(
+              image: AssetImage("assets/images/register_images.png"),
+              height: 350,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const Center(
+            child: Text(
+              "WELCOME TO REGISTER PAGE",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w600,
+                fontSize: 23,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Center(
+            child: Text(
+              "GO REGISTRATION WITH",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w600,
+                fontSize: 23,
+              ),
+            ),
+          ),
+          const SizedBox(height: 50),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const SizedBox(
-                height: 30,
-              ),
-              const Text(
-                "REGISTATION PAGE",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 30,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(140, 40),
+                  backgroundColor: const Color(0xFF1F41BB),
                 ),
-              ),
-              const Spacer(),
-              CustomElevatedButton(
-                text: "Sign In",
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SignIn(),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 25),
-              CustomElevatedButton(
-                text: "Sign Up",
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SignUp(),
+                      builder: (context) => const SignIn(),
                     ),
                   );
                 },
+                child: const Text(
+                  "LOGIN",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 19,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-              const SizedBox(height: 25),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(140, 40),
+                  backgroundColor: const Color(0xFF1F41BB),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignUpPage(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "REGISTER",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 19,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
             ],
-          ),
-        ),
+          )
+        ],
       ),
     );
   }

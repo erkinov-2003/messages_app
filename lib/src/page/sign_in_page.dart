@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:messag_app/src/page/home_page.dart';
 import 'package:messag_app/src/page/sign_up_page.dart';
-import 'package:provider/provider.dart';
-import '../controller/provider.dart';
-import '../service/auth_service.dart';
-import '../view/button_view.dart';
-import '../view/text_fild_view.dart';
+import 'package:messag_app/src/service/auth_service.dart';
+import 'package:messag_app/src/view/text_fild_view.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+  const SignIn({super.key});
 
   @override
   State<SignIn> createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
-  final bool isLogin = true;
-  bool loading = false;
-  final _formKey1 = GlobalKey<FormState>();
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  late final TextEditingController emailController;
+  late final TextEditingController passwordController;
 
   @override
   void initState() {
@@ -28,99 +22,155 @@ class _SignInState extends State<SignIn> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
+  void Function()? onPressed() {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 1000),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          animation = CurvedAnimation(
+            parent: animation,
+            curve: Curves.slowMiddle,
+          );
+          return ScaleTransition(
+            alignment: Alignment.center,
+            scale: animation,
+            child: child,
+          );
+        },
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return const SignUpPage();
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 27, 32, 45),
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF9F28CC),
-        title: const Text("Sign In"),
-      ),
-      body: Form(
-        key: _formKey1,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              const Text(
-                "Welcome back! Glad\nto see you, Again!",
+       resizeToAvoidBottomInset: false,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 80, right: 15, left: 15),
+        child: Column(
+          children: [
+            const Center(
+              child: Text(
+                "LOGIN HERE ",
                 style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    fontSize: 35),
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 30,
+                ),
               ),
-              const SizedBox(height: 60),
-              CustomTextFild(
-                controller: emailController,
-                hintText: "your email",
-                validator: (p0) =>
-                    Provider.of<ProFunc>(context, listen: false).emailIn(p0),
+            ),
+            const SizedBox(height: 20),
+            const Center(
+              child: Text(
+                "Welcome back you’ve been missed",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                ),
               ),
-              const SizedBox(height: 20),
-              CustomTextFild(
-                controller: passwordController,
-                hintText: "password",
-                validator: (p0) =>
-                    Provider.of<ProFunc>(context, listen: false).passwordIn(p0),
+            ),
+            const SizedBox(height: 50),
+            CustomTextFild(
+              hintText: "enter your email",
+              controller: emailController,
+            ),
+            const SizedBox(height: 30),
+            CustomTextFild(
+              hintText: "enter your password",
+              counterText: "Forgot your password",
+              controller: passwordController,
+            ),
+            const SizedBox(height: 50),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(340, 55),
+                backgroundColor: const Color.fromARGB(255, 31, 65, 187),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
               ),
-              const Spacer(),
-              CustomElevatedButton(
-                text: "Login",
-                onPressed: signInWithEmailAndPassword,
-              ),
-              const SizedBox(height: 40),
-              GestureDetector(
-                onTap: () {
+              onPressed: () {
+                if (emailController.text.isEmpty &&
+                    passwordController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Iltimos bosh qoldirmang"),
+                    ),
+                  );
+                } else {
+                  Auth().signIn(
+                    email: emailController.text,
+                    password: passwordController.text,
+                  );
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SignUp(),
+                      builder: (context) => const HomePage(),
                     ),
                   );
-                },
-                child: RichText(
-                  text: const TextSpan(
-                      style: TextStyle(color: Colors.white),
-                      children: [
-                        TextSpan(
-                          text: "Don't have an account?",
-                        ),
-                        TextSpan(
-                          text: " SingUp now",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ]),
+                }
+              },
+              child: const Text(
+                "SIGN IN",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 19,
+                  fontWeight: FontWeight.w500,
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Don’t have an account ? ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(width: 7),
+                GestureDetector(
+                  onTap: onPressed,
+                  child: const Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 40),
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                height: 55,
+                width: 55,
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
-  }
-
-  Future<void> signInWithEmailAndPassword() async {
-    await Auth()
-        .signInWithEmailAndPassword(
-          email: emailController.value.text,
-          password: passwordController.value.text,
-        )
-        .then(
-          (value) => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          ),
-        );
   }
 }
