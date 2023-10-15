@@ -36,7 +36,10 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 27, 32, 45),
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 27, 32, 45),
+        elevation: 0,
         title: Text(widget.userEmail),
       ),
       body: Column(
@@ -64,6 +67,7 @@ class _ChatPageState extends State<ChatPage> {
           return const Text("Loading");
         }
         return ListView(
+          physics: const BouncingScrollPhysics(),
           children: snapshot.data!.docs
               .map((document) => _buildMessageItem(document))
               .toList(),
@@ -74,6 +78,9 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageItem(DocumentSnapshot snapshot) {
     Map<String, dynamic> date = snapshot.data() as Map<String, dynamic>;
+    var color = (date["sendId"] == _firebaseAuth.currentUser!.uid)
+        ? Colors.green
+        : Colors.deepPurple;
     var alignment = (date["sendId"] == _firebaseAuth.currentUser!.uid)
         ? Alignment.centerRight
         : Alignment.centerLeft;
@@ -87,13 +94,13 @@ class _ChatPageState extends State<ChatPage> {
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: _firebaseAuth.currentUser?.uid != null
-                    ? Colors.green
-                    : Colors.deepPurple,
+                color: color,
               ),
               child: Text(
                 date["message"],
-                style: const TextStyle(),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
           ],
@@ -104,38 +111,55 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageInput() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        const SizedBox(width: 8),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.image, size: 30),
-        ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(15),
             child: TextField(
+              style: const TextStyle(color: Colors.white),
               minLines: 1,
               maxLines: 3,
               obscureText: false,
               controller: _messagesController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: sendMessages,
+                  icon: const Icon(
+                    Icons.send,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                ),
+                prefixIcon: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.image,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                ),
+                hintStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
                 isDense: true,
-                border: InputBorder.none,
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white, width: 0.5),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(25),
+                  ),
+                ),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(25),
+                  ),
+                ),
                 hintText: "Enter messanger",
               ),
             ),
           ),
         ),
-        IconButton(
-          onPressed: sendMessages,
-          icon: const Icon(
-            Icons.send,
-            size: 30,
-            color: Colors.black,
-          ),
-        ),
-        const SizedBox(width: 8),
       ],
     );
   }

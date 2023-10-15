@@ -65,6 +65,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 27, 32, 45),
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.only(top: 80, right: 15, left: 15),
@@ -86,7 +87,7 @@ class _SignInState extends State<SignIn> {
                 "Welcome back you’ve been missed",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                 ),
@@ -131,7 +132,7 @@ class _SignInState extends State<SignIn> {
                 const Text(
                   "Don’t have an account ? ",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
@@ -152,19 +153,25 @@ class _SignInState extends State<SignIn> {
               ],
             ),
             const SizedBox(height: 40),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: 55,
-                width: 55,
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                3,
+                    (index) => Padding(
+                  padding: const EdgeInsets.only(left: 7, right: 7),
+                  child: Container(
+                    height: 55,
+                    width: 55,
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),

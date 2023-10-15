@@ -26,7 +26,7 @@ class CustomTextFild extends StatelessWidget {
         hintText: hintText,
         counterText: counterText,
         counterStyle: const TextStyle(
-          color: Color.fromARGB(255, 31, 65, 187),
+          color: Colors.red,
           fontWeight: FontWeight.w500,
           fontSize: 14
         ),

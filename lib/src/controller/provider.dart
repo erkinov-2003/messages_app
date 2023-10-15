@@ -33,6 +33,13 @@ class ProFunc extends ChangeNotifier {
     }
   }
 
+  bool pages = true;
+
+  void changePages(){
+    pages =! pages;
+    notifyListeners();
+  }
+
   String? emailIn(value) {
     if (value != null && !RegExp(r".{6,}@gmail.com").hasMatch(value)) {
       return "enter your email correctly";

@@ -1,8 +1,6 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:messag_app/src/page/sign_in_page.dart';
 import 'package:messag_app/src/service/auth_service.dart';
 import 'chat_page.dart';
 
@@ -25,33 +23,56 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("WELCOME TO USER PAGE"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: signOut,
-            icon: const Icon(
-              Icons.login,
-              size: 30,
+      backgroundColor: const Color.fromARGB(255, 27, 32, 45),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Center(
+                    child:  Text(
+                      "MESSANGER",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: signOut,
+                    icon: const Icon(
+                      Icons.login,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 50),
+            Expanded(
+              child: Container(
+                height: 700,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 41, 47, 63),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(35),
+                    topRight: Radius.circular(35),
+                  ),
+                ),
+                child: _userBuildList(),
+              ),
+            )
+          ],
+        ),
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("users").snapshots(),
-        builder: (context, snapshot){
-          if(snapshot.hasData){
-            return _userBuildList();
-          }else if(snapshot.hasError){
-            return const Center(
-              child: CircularProgressIndicator(value: 30),
-            );
-          }else{
-            return const Text("Erors is not users");
-          }
-        },
-      )
     );
   }
 
@@ -80,27 +101,34 @@ class _HomePageState extends State<HomePage> {
   Widget _buildUserListItem(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
     if (service.currentUser!.email != data["email"]) {
-      return ListTile(
-        title: Card(
-          child: SizedBox(
-            height: 50,
-            child: Center(
-              child: Text(
+      return Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
+        child: Card(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+            Radius.circular(25),
+          )),
+          child: Center(
+            child: ListTile(
+              title: Text(
                 data["email"],
                 style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
-                  fontSize: 19,
+                  fontSize: 23,
+                ),
+              ),
+              trailing: Text(DateTime.now().hour.toString()),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatPage(
+                    userEmail: data["email"],
+                    userId: data["uid"],
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                ChatPage(userEmail: data["email"], userId: data["uid"]),
           ),
         ),
       );

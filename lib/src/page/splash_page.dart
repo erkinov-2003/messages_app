@@ -1,8 +1,6 @@
 import "package:flutter/material.dart";
 import "package:lottie/lottie.dart";
 import "package:messag_app/src/page/examination.dart";
-import "package:messag_app/src/page/register_page.dart";
-import "package:messag_app/src/page/sign_in_page.dart";
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -28,6 +26,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 27, 32, 45),
       body: Center(
         child: Lottie.asset(
           "assets/animation_lnnnw1kf.json",

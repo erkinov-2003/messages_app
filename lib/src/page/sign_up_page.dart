@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:messag_app/src/page/home_page.dart';
 import 'package:messag_app/src/page/sign_in_page.dart';
 import 'package:messag_app/src/service/auth_service.dart';
 import 'package:messag_app/src/view/text_fild_view.dart';
-import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key, this.onTap});
@@ -79,6 +77,7 @@ class _SignInState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: const Color.fromARGB(255, 27, 32, 45),
       body: Padding(
         padding: const EdgeInsets.only(top: 80, right: 15, left: 15),
         child: Column(
@@ -99,7 +98,7 @@ class _SignInState extends State<SignUpPage> {
                 "Welcome back you’ve been missed!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                 ),
@@ -150,7 +149,7 @@ class _SignInState extends State<SignUpPage> {
                 const Text(
                   "Im alerady an account",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
