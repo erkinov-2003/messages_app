@@ -3,9 +3,12 @@ import 'package:messag_app/src/page/home_page.dart';
 import 'package:messag_app/src/page/sign_in_page.dart';
 import 'package:messag_app/src/service/auth_service.dart';
 import 'package:messag_app/src/view/text_fild_view.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+  const SignUpPage({super.key, this.onTap});
+
+  final Function()? onTap;
 
   @override
   State<SignUpPage> createState() => _SignInState();
@@ -53,6 +56,23 @@ class _SignInState extends State<SignUpPage> {
         },
       ),
     );
+  }
+
+  Future signUp() async {
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Iltimos parolingizni bir xil kiriting"),
+        ),
+      );
+      return;
+    } else {
+      final service = Auth().signUp(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      return service;
+    }
   }
 
   @override
@@ -113,26 +133,7 @@ class _SignInState extends State<SignUpPage> {
                   ),
                 ),
               ),
-              onPressed: () {
-                if (passwordController.text != confirmPasswordController.text) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Iltimos parolingizni bir xil kiriting"),
-                    ),
-                  );
-                } else {
-                  Auth().signUp(
-                    email: emailController.text.trim(),
-                    password: passwordController.text.trim(),
-                  );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ),
-                  );
-                }
-              },
+              onPressed: signUp,
               child: const Text(
                 "SIGN UP",
                 style: TextStyle(
@@ -156,7 +157,7 @@ class _SignInState extends State<SignUpPage> {
                 ),
                 const SizedBox(width: 7),
                 GestureDetector(
-                  onTap: onPressed,
+                  onTap: widget.onTap,
                   child: const Text(
                     "Sign in",
                     style: TextStyle(

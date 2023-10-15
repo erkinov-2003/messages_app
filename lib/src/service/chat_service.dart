@@ -10,7 +10,9 @@ class ChatService {
   Future<void> sendMessenger(String userId, String message) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
     final String currentUserEmail = _firebaseAuth.currentUser!.email.toString();
+
     final Timestamp timestamp = Timestamp.now();
+
     MessengerModel newMessage = MessengerModel(
       sendId: currentUserId,
       sendEmail: currentUserEmail,

@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:lottie/lottie.dart";
+import "package:messag_app/src/page/examination.dart";
 import "package:messag_app/src/page/register_page.dart";
 import "package:messag_app/src/page/sign_in_page.dart";
 
@@ -17,7 +18,7 @@ class _SplashPageState extends State<SplashPage> {
       return Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const RegisterPage(),
+          builder: (context) => const Examination(),
         ),
       );
     });

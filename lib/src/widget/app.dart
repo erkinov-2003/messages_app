@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:messag_app/src/controller/provider.dart';
-import 'package:messag_app/src/page/register_page.dart';
+import 'package:messag_app/src/page/examination.dart';
 
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class MyApplication extends StatelessWidget {
       create: (context) => ProFunc(),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: RegisterPage(),
+        home: Examination(),
       ),
     );
   }

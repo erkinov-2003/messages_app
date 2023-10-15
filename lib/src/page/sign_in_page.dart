@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:messag_app/src/page/home_page.dart';
 import 'package:messag_app/src/page/sign_up_page.dart';
 import 'package:messag_app/src/service/auth_service.dart';
 import 'package:messag_app/src/view/text_fild_view.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  const SignIn({super.key, this.onTap});
+
+  final Function()? onTap;
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -45,10 +46,26 @@ class _SignInState extends State<SignIn> {
     );
   }
 
+  Future signIn() async {
+    if (passwordController.text.isEmpty && emailController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Iltimos bosh qoldirmang"),
+        ),
+      );
+    } else {
+      final service = Auth().signIn(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      return service;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.only(top: 80, right: 15, left: 15),
         child: Column(
@@ -97,27 +114,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-              onPressed: () {
-                if (emailController.text.isEmpty &&
-                    passwordController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Iltimos bosh qoldirmang"),
-                    ),
-                  );
-                } else {
-                  Auth().signIn(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ),
-                  );
-                }
-              },
+              onPressed: signIn,
               child: const Text(
                 "SIGN IN",
                 style: TextStyle(
@@ -141,7 +138,7 @@ class _SignInState extends State<SignIn> {
                 ),
                 const SizedBox(width: 7),
                 GestureDetector(
-                  onTap: onPressed,
+                  onTap: widget.onTap,
                   child: const Text(
                     "Sign Up",
                     style: TextStyle(

@@ -41,7 +41,9 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
-          Expanded(child: _buildMessageList()),
+          Expanded(
+            child: _buildMessageList(),
+          ),
           _buildMessageInput(),
         ],
       ),
@@ -78,19 +80,20 @@ class _ChatPageState extends State<ChatPage> {
     return Container(
       alignment: alignment,
       child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15),
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 8),
         child: Column(
           children: [
             Container(
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: Colors.blue,
+                color: _firebaseAuth.currentUser?.uid != null
+                    ? Colors.green
+                    : Colors.deepPurple,
               ),
               child: Text(
                 date["message"],
-                style: const TextStyle(
-                ),
+                style: const TextStyle(),
               ),
             ),
           ],
@@ -101,13 +104,26 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageInput() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        const SizedBox(width: 8),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.image, size: 30),
+        ),
         Expanded(
-          child: TextField(
-            obscureText: false,
-            controller: _messagesController,
-            decoration: const InputDecoration(
-              hintText: "Enter messanger",
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: TextField(
+              minLines: 1,
+              maxLines: 3,
+              obscureText: false,
+              controller: _messagesController,
+              decoration: const InputDecoration(
+                isDense: true,
+                border: InputBorder.none,
+                hintText: "Enter messanger",
+              ),
             ),
           ),
         ),
@@ -118,7 +134,8 @@ class _ChatPageState extends State<ChatPage> {
             size: 30,
             color: Colors.black,
           ),
-        )
+        ),
+        const SizedBox(width: 8),
       ],
     );
   }

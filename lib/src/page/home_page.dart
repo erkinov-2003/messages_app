@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:messag_app/src/page/sign_in_page.dart';
+import 'package:messag_app/src/service/auth_service.dart';
 import 'chat_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +15,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final service = FirebaseAuth.instance;
+  final FirebaseFirestore store = FirebaseFirestore.instance;
+
+  Future signOut() async {
+    final service = Auth().signOut();
+    return service;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +30,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SignIn(),
-                ),
-              );
-            },
+            onPressed: signOut,
             icon: const Icon(
               Icons.login,
               size: 30,
