@@ -52,22 +52,22 @@ class NotificationService {
 
     FirebaseMessaging.onMessage.listen(
       (event) async {
-        print("onMessage ${event.notification?.title}");
-        print("onMessage ${event.notification?.body}");
-        print("onMessage ${event.notification?.android}");
+        // print("onMessage ${event.notification?.title}");
+        // print("onMessage ${event.notification?.body}");
+        // print("onMessage ${event.notification?.android}");
       },
     );
 
     FirebaseMessaging.onMessageOpenedApp.listen((event) async {
-      print("onMessageOpenedApp ${event.notification?.title}");
-      print("onMessageOpenedApp ${event.notification?.body}");
-      print("onMessageOpenedApp ${event.notification?.android}");
+      // print("onMessageOpenedApp ${event.notification?.title}");
+      // print("onMessageOpenedApp ${event.notification?.body}");
+      // print("onMessageOpenedApp ${event.notification?.android}");
     });
 
     FirebaseMessaging.onBackgroundMessage((event) async {
-      print("onMessageOpenedApp ${event.notification?.title}");
-      print("onMessageOpenedApp ${event.notification?.body}");
-      print("onMessageOpenedApp ${event.notification?.android}");
+      // print("onMessageOpenedApp ${event.notification?.title}");
+      // print("onMessageOpenedApp ${event.notification?.body}");
+      // print("onMessageOpenedApp ${event.notification?.android}");
     });
   }
 
