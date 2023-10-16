@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Center(
-                    child:  Text(
+                    child: Text(
                       "MESSANGER",
                       style: TextStyle(
                         color: Colors.white,
@@ -105,9 +105,10 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
         child: Card(
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-            Radius.circular(25),
-          )),
+            borderRadius: BorderRadius.all(
+              Radius.circular(25),
+            ),
+          ),
           child: Center(
             child: ListTile(
               title: Text(
@@ -117,8 +118,18 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.w500,
                   fontSize: 23,
                 ),
+                 maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-              trailing: Text(DateTime.now().hour.toString()),
+              trailing: IconButton(
+                onPressed: (){
+                },
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                  size: 30,
+                ),
+              ),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(

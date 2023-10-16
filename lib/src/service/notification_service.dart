@@ -74,8 +74,8 @@ class NotificationService {
   Future<void> showNotification(RemoteMessage remoteMessage) async {
     if (remoteMessage.notification != null) {
       const androidPlatform = AndroidNotificationDetails(
-        "message_channel",
-        "Message notification",
+        "message_channel_id",
+        "Message notification_name",
         importance: Importance.max,
         priority: Priority.high,
         playSound: true,
