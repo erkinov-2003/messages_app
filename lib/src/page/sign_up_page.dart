@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:messag_app/src/service/auth_service.dart';
 import 'package:messag_app/src/view/text_fild_view.dart';
 
-class SignUpPage extends StatefulWidget {
+  class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key, this.onTap});
 
   final Function()? onTap;
 
   @override
   State<SignUpPage> createState() => _SignInState();
-}
+  }
 
-class _SignInState extends State<SignUpPage> {
+  class _SignInState extends State<SignUpPage> {
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
   late final TextEditingController confirmPasswordController;
