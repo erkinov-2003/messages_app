@@ -60,9 +60,10 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 height: 700,
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 41, 47, 63),
-                  borderRadius: BorderRadius.only(
+                decoration:  BoxDecoration(
+                  color: const Color.fromARGB(255, 41, 47, 63),
+                  border: Border.all(color: Colors.white, width: 0.4),
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(35),
                     topRight: Radius.circular(35),
                   ),
@@ -84,13 +85,20 @@ class _HomePageState extends State<HomePage> {
           return const Text("Error snapshot data");
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading");
+          return const Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.green,
+            ),
+          );
         }
         if (snapshot.hasData) {
-          return ListView(
-            physics: const BouncingScrollPhysics(),
-            children:
-                snapshot.data!.docs.map((e) => _buildUserListItem(e)).toList(),
+          return Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              children:
+                  snapshot.data!.docs.map((e) => _buildUserListItem(e)).toList(),
+            ),
           );
         }
         return const CircularProgressIndicator();
@@ -103,43 +111,24 @@ class _HomePageState extends State<HomePage> {
     if (service.currentUser!.email != data["email"]) {
       return Padding(
         padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
-        child: Card(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(25),
-            ),
-          ),
-          child: Center(
-            child: ListTile(
-              title: Text(
-                data["email"],
-                style: const TextStyle(
-                  color: Colors.black,
+        child: ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatPage(
+                  userEmail: data["email"],
+                  userId: data["uid"],
+                ),
+              ),
+            );
+          },
+          title: Text(
+            data["email"],
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: Colors.white,
                   fontWeight: FontWeight.w500,
-                  fontSize: 23,
                 ),
-                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              trailing: IconButton(
-                onPressed: (){
-                },
-                icon: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                  size: 30,
-                ),
-              ),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChatPage(
-                    userEmail: data["email"],
-                    userId: data["uid"],
-                  ),
-                ),
-              ),
-            ),
           ),
         ),
       );

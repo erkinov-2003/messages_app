@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:messag_app/src/page/sign_up_page.dart';
 import 'package:messag_app/src/service/auth_service.dart';
 import 'package:messag_app/src/view/text_fild_view.dart';
 
@@ -23,29 +22,6 @@ class _SignInState extends State<SignIn> {
     super.initState();
   }
 
-  void Function()? onPressed() {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 1000),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          animation = CurvedAnimation(
-            parent: animation,
-            curve: Curves.slowMiddle,
-          );
-          return ScaleTransition(
-            alignment: Alignment.center,
-            scale: animation,
-            child: child,
-          );
-        },
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return const SignUpPage();
-        },
-      ),
-    );
-  }
-
   Future signIn() async {
     if (passwordController.text.isEmpty && emailController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -67,112 +43,97 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 27, 32, 45),
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 80, right: 15, left: 15),
-        child: Column(
-          children: [
-            const Center(
-              child: Text(
-                "LOGIN HERE ",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 30,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Center(
-              child: Text(
-                "Welcome back you’ve been missed",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            const SizedBox(height: 50),
-            CustomTextFild(
-              hintText: "enter your email",
-              controller: emailController,
-            ),
-            const SizedBox(height: 30),
-            CustomTextFild(
-              hintText: "enter your password",
-              counterText: "Forgot your password",
-              controller: passwordController,
-            ),
-            const SizedBox(height: 50),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size(340, 55),
-                backgroundColor: const Color.fromARGB(255, 31, 65, 187),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-              ),
-              onPressed: signIn,
-              child: const Text(
-                "SIGN IN",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 19,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 15, left: 15, top: 85),
+            child: Column(
               children: [
-                const Text(
-                  "Don’t have an account ? ",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(width: 7),
-                GestureDetector(
-                  onTap: widget.onTap,
-                  child: const Text(
-                    "Sign Up",
+                const Center(
+                  child: Text(
+                    "LOGIN HERE ",
                     style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
+                      fontSize: 30,
                     ),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 40),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                3,
-                    (index) => Padding(
-                  padding: const EdgeInsets.only(left: 7, right: 7),
-                  child: Container(
-                    height: 55,
-                    width: 55,
-                    decoration: const BoxDecoration(
-                      color: Colors.blue,
+                const SizedBox(height: 20),
+                const Center(
+                  child: Text(
+                    "Welcome back you’ve been missed",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 50),
+                CustomTextFild(
+                  hintText: "enter your email",
+                  controller: emailController,
+                ),
+                const SizedBox(height: 30),
+                CustomTextFild(
+                  hintText: "enter your password",
+                  counterText: "Forgot your password",
+                  controller: passwordController,
+                ),
+                const SizedBox(height: 50),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(340, 55),
+                    backgroundColor: const Color.fromARGB(255, 31, 65, 187),
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(15),
                       ),
                     ),
                   ),
+                  onPressed: signIn,
+                  child: const Text(
+                    "SIGN IN",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 19,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
-              ),
-            )
-          ],
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Don’t have an account ? ",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(width: 7),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

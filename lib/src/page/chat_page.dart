@@ -64,7 +64,11 @@ class _ChatPageState extends State<ChatPage> {
           return const Text("Error snapshot data");
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading");
+          return const Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.green,
+            ),
+          );
         }
         return ListView(
           physics: const BouncingScrollPhysics(),
